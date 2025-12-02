@@ -36,7 +36,7 @@ export const register = async(req, res)=>{
     }
 }
 
-export const login = async()=>{
+export const login = async(req, res)=>{
     const {email, password} = req.body
     if(!email || !password){
         return res.json({success: false, message: "Email || Password are required "})
@@ -72,17 +72,17 @@ export const login = async()=>{
     }
 }
 
-export const logout = async(req, res)=>{
-    try{
-        res.clearCooke(token,{
-            httpOnly:true,
+export const logout = async (req, res) => {
+    try {
+        res.clearCookie("token", {
+            httpOnly: true,
             secure: process.env.NODE_ENV === "production",
-            sameSite: process.env.NODE_ENV === "production" ? 'none' : 'strict'
-        })
+            sameSite: process.env.NODE_ENV === "production" ? 'none' : 'strict',
+        });
 
-        return res.json({success: true, message:'log out'})
+        return res.json({ success: true, message: 'Logged out successfully' });
 
-    }catch(error){
-        res.json({success: false, message : error.message})
+    } catch (error) {
+        return res.json({ success: false, message: error.message });
     }
-}
+};
